@@ -13,7 +13,7 @@
                 <div class="new-post__form">
                     @include('layout.includes.alerts')
 
-                    <form method="POST" action="{{ route('posts', [], false) }}">
+                    <form method="POST" action="{{ route('posts.index', [], false) }}">
                         <div class="form-group">
                             <label for="titleInput">Название статьи</label>
                             <input id="titleInput" name="title" type="text" class="form-control" value="{{ old('title') }}"/>

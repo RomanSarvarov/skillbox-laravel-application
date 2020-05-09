@@ -21,12 +21,12 @@ Route::post('/contacts', 'FeedbackController@store');
 Route::get('/admin/feedbacks', 'FeedbackController@index');
 
 /**
+ * Posts
+ */
+Route::resource('/posts', 'PostController');
+
+/**
  * Misc
  */
 Route::get('/about', 'BaseController@about');
 Route::get('/', 'BaseController@index');
-
-Route::post('/posts', 'PostController@store')->name('posts');
-Route::get('/posts/create', 'PostController@create');
-Route::get('/posts/{post:slug}', 'PostController@show');
-

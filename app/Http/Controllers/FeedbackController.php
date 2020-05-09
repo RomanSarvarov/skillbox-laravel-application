@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FeedbackRequest;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
 
@@ -18,13 +19,8 @@ class FeedbackController extends Controller
         return view('pages.base.feedback');
     }
 
-    public function store(Request $request)
+    public function store(FeedbackRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email:rfc,dns',
-            'message' => 'required',
-        ]);
-
         Feedback::create($request->input());
 
         return redirect()->back()

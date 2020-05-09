@@ -28,5 +28,8 @@ namespace App\Models;
  */
 class Post extends AbstractModel
 {
-
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

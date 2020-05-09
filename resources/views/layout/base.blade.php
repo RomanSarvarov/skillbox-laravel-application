@@ -8,7 +8,7 @@
             @yield('content')
         </div>
 
-        @include('layout.template-parts.sidebar')
+        {{--@include('layout.template-parts.sidebar')--}}
     </div>
 </main>
 
