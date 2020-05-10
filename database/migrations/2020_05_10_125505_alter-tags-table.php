@@ -13,7 +13,7 @@ class AlterTagsTable extends Migration
      */
     public function up()
     {
-        Schema::table('tag', function (Blueprint $table) {
+        Schema::table('tags', function (Blueprint $table) {
             $table->string('slug', 50)->unique();
         });
     }
@@ -25,7 +25,7 @@ class AlterTagsTable extends Migration
      */
     public function down()
     {
-        Schema::table('tag', function (Blueprint $table) {
+        Schema::table('tags', function (Blueprint $table) {
             $table->dropColumn('slug');
         });
     }
