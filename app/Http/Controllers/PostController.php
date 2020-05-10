@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use App\Services\TagService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
 
 class PostController extends Controller
 {
+    private TagService $tagService;
+
+    public function __construct(TagService $tagService)
+    {
+        $this->tagService = $tagService;
+
+        view()->share('tagCloud', $tagService->getTagCloud());
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +39,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('pages.post.create');
+        return view('pages.posts.create');
     }
 
     /**
@@ -43,7 +52,7 @@ class PostController extends Controller
     {
         $post = Post::create($request->input());
 
-        return redirect()->route('posts.show', $post->slug, false);
+        return redirect()->route('posts.show', $post, false);
     }
 
     /**
@@ -54,7 +63,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('pages.post.show')->with('post', $post);
+        return view('pages.posts.show')->with('posts', $post);
     }
 
     /**
@@ -65,7 +74,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('pages.post.edit')->with('post', $post);
+        return view('pages.posts.edit')->with('posts', $post);
     }
 
     /**

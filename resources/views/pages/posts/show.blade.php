@@ -20,7 +20,13 @@
             </div>
         </div>
 
-        <footer class="post__footer mt-3">
+        <footer class="post__footer my-3">
+            @if($post->tags->isNotEmpty())
+                <div class="tags">Теги: {{ $post->tags->implode('name', ', ') }}</div>
+
+                <br />
+            @endif
+
             <a href="{{ route('homepage', [], false) }}" class="btn btn-primary">Вернуться на главную</a>
         </footer>
     </section>

@@ -26,6 +26,11 @@ Route::get('/admin/feedbacks', 'FeedbackController@index')->name('contacts.index
 Route::resource('/posts', 'PostController');
 
 /**
+ * Tags
+ */
+Route::get('/tags/{tag:slug}', 'TagController@show')->name('tags.show');
+
+/**
  * Misc
  */
 Route::get('/about', 'BaseController@about')->name('page.about');

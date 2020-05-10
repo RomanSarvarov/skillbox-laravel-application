@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Interfaces\Models\HasUrlInterface;
+use App\Models\Concerns\HasUrl;
+
 /**
  * App\Models\Post
  *
@@ -25,9 +28,14 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tag
+ * @property-read int|null $tags_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
  */
-class Post extends AbstractModel
+class Post extends AbstractModel implements HasUrlInterface
 {
+    use HasUrl;
+
     public function getRouteKeyName()
     {
         return 'slug';
