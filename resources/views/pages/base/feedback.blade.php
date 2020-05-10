@@ -29,7 +29,7 @@
                         </div>
                         <div class="form-group">
                             <label for="messageInput">Сообщение</label>
-                            <textarea id="messageInput" name="message" class="form-control" rows="5" value="{{ old('message') }}"></textarea>
+                            <textarea id="messageInput" name="message" class="form-control" rows="5">{{ old('message') }}</textarea>
                         </div>
 
                         @csrf

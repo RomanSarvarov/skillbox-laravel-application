@@ -21,7 +21,7 @@
         </div>
 
         <footer class="post__footer mt-3">
-            <a href="/" class="btn btn-primary">Вернуться на главную</a>
+            <a href="{{ route('homepage', [], false) }}" class="btn btn-primary">Вернуться на главную</a>
         </footer>
     </section>
 @endsection

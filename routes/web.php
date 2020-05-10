@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 /**
  * Feedback
  */
-Route::get('/contacts', 'FeedbackController@create')->name('contacts');
+Route::get('/contacts', 'FeedbackController@create')->name('contacts.create');
 Route::post('/contacts', 'FeedbackController@store');
-Route::get('/admin/feedbacks', 'FeedbackController@index');
+Route::get('/admin/feedbacks', 'FeedbackController@index')->name('contacts.index');
 
 /**
  * Posts
@@ -28,5 +28,5 @@ Route::resource('/posts', 'PostController');
 /**
  * Misc
  */
-Route::get('/about', 'BaseController@about');
-Route::get('/', 'BaseController@index');
+Route::get('/about', 'BaseController@about')->name('page.about');
+Route::get('/', 'BaseController@index')->name('homepage');

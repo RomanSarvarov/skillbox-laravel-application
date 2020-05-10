@@ -1,6 +1,10 @@
 @extends('layout.base')
 
-@php $title = 'Изменение статьи'; @endphp
+@php
+    /** @var \App\Models\Post $post */
+
+    $title = 'Изменение статьи';
+@endphp
 
 @section('title', $title)
 
@@ -42,7 +46,7 @@
                         </div>
 
                         <div class="custom-control custom-checkbox mb-4">
-                            <input type="hidden" name="is_posted" value="0" />
+                            <input type="hidden" name="is_posted" value="0"/>
                             <input type="checkbox" class="custom-control-input" name="is_posted" id="isPostedCheckbox"
                                    value="1" {{ old('is_posted', $post->is_posted) ? 'checked' : '' }}/>
                             <label class="custom-control-label" for="isPostedCheckbox">Опубликовано сейчас</label>
@@ -61,7 +65,7 @@
 
                             @method('DELETE')
 
-                            <input type="submit" class="btn btn-danger" value="Удалить запись" />
+                            <input type="submit" class="btn btn-danger" value="Удалить запись"/>
                         </form>
                     </div>
                 </div>

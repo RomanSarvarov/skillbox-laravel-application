@@ -43,7 +43,7 @@ class PostController extends Controller
     {
         $post = Post::create($request->input());
 
-        return redirect("/posts/{$post->slug}");
+        return redirect()->route('posts.show', $post->slug, false);
     }
 
     /**

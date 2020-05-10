@@ -15,7 +15,7 @@
                         {{ $post->description }}
                     </div>
 
-                    <a href="/posts/{{ $post->slug }}" class="btn btn-primary mt-4">Читать полностью</a>
+                    <a href="{{ route('posts.show', $post->slug, false) }}" class="btn btn-primary mt-4">Читать полностью</a>
                 </article>
             @endforeach
         @else
