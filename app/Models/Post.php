@@ -32,4 +32,9 @@ class Post extends AbstractModel
     {
         return 'slug';
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }
