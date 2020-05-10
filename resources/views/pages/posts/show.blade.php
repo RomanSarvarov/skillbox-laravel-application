@@ -1,7 +1,7 @@
 @extends('layout.base')
 
 @php
-    $title = 'Создание новой статьи';
+    $title = $post->title;
 
     /** @var \App\Models\Post $post */
 @endphp

@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * Class PostRequest
  *
- * @property-read Post $posts
+ * @property-read Post $post
  */
 class PostRequest extends FormRequest
 {

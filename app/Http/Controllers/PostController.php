@@ -4,32 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
-use App\Services\TagService;
+use App\Models\Tag;
+use App\Services\PostService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Throwable;
 
 class PostController extends Controller
 {
-    private TagService $tagService;
-
-    public function __construct(TagService $tagService)
-    {
-        $this->tagService = $tagService;
-
-        view()->share('tagCloud', $tagService->getTagCloud());
-    }
-
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Factory|View
      */
     public function index()
     {
-        //
+        return view('pages.base.homepage')
+            ->with('posts', Post::latest()->get());
     }
 
     /**
@@ -46,11 +42,13 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  PostRequest  $request
+     * @param  PostService  $postService
      * @return RedirectResponse|Redirector
+     * @throws Throwable
      */
-    public function store(PostRequest $request)
+    public function store(PostRequest $request, PostService $postService)
     {
-        $post = Post::create($request->input());
+        $post = $postService->updateOrCreate($request);
 
         return redirect()->route('posts.show', $post, false);
     }
@@ -63,7 +61,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('pages.posts.show')->with('posts', $post);
+        return view('pages.posts.show')->with('post', $post);
     }
 
     /**
@@ -74,7 +72,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('pages.posts.edit')->with('posts', $post);
+        return view('pages.posts.edit')->with('post', $post);
     }
 
     /**
@@ -82,11 +80,13 @@ class PostController extends Controller
      *
      * @param  PostRequest  $request
      * @param  Post  $post
+     * @param  PostService  $postService
      * @return RedirectResponse
+     * @throws Throwable
      */
-    public function update(PostRequest $request, Post $post): RedirectResponse
+    public function update(PostRequest $request, Post $post, PostService $postService): RedirectResponse
     {
-        $post->update($request->input());
+        $postService->updateOrCreate($request, $post);
 
         return redirect()->back()
             ->with('success', 'Post was updated!');

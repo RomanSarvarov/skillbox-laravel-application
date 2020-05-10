@@ -34,4 +34,4 @@ Route::get('/tags/{tag:slug}', 'TagController@show')->name('tags.show');
  * Misc
  */
 Route::get('/about', 'BaseController@about')->name('page.about');
-Route::get('/', 'BaseController@index')->name('homepage');
+Route::get('/', 'PostController@index')->name('homepage');
