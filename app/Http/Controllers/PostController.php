@@ -50,7 +50,7 @@ class PostController extends Controller
     {
         $post = $postService->updateOrCreate($request);
 
-        return redirect()->route('posts.show', $post, false);
+        return redirect()->route('posts.show', $post);
     }
 
     /**

@@ -13,7 +13,7 @@
                 <div class="new-post__form">
                     @include('layout.includes.alerts')
 
-                    <form method="POST" action="{{ route('posts.index', [], false) }}">
+                    <form method="POST" action="{{ route('posts.store', [], false) }}">
                         <div class="form-group">
                             <label for="titleInput">Название статьи</label>
                             <input id="titleInput" name="title" type="text" class="form-control" value="{{ old('title') }}"/>
@@ -36,14 +36,22 @@
                             <textarea id="contentInput" name="content" class="form-control" rows="15">{{ old('content') }}</textarea>
                         </div>
 
+                        <div class="form-group">
+                            <label for="tagInput">Теги через запятую</label>
+                            <input id="tagInput" name="tags" type="text" class="form-control"
+                                   value="{{ old('tags') }}"/>
+                        </div>
+
                         <div class="custom-control custom-checkbox mb-4">
-                            <input type="checkbox" class="custom-control-input" name="is_posted" id="isPostedCheckbox" value="1" {{ old('is_posted', true) ? 'checked' : '' }}/>
+                            <input type="hidden" name="is_posted" value="0"/>
+                            <input type="checkbox" class="custom-control-input" name="is_posted" id="isPostedCheckbox"
+                                   value="1" {{ old('is_posted', true) ? 'checked' : '' }}/>
                             <label class="custom-control-label" for="isPostedCheckbox">Опубликовано сейчас</label>
                         </div>
 
                         @csrf
 
-                        <input type="submit" class="btn btn-primary" value="Отправить"/>
+                        <input type="submit" class="btn btn-primary" value="Сохранить"/>
                     </form>
                 </div>
             </div>

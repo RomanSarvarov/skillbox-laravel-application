@@ -19,15 +19,15 @@ class PostService
     {
         $post = $post ?: app(Post::class);
 
-        $post->fill($request->validated());
-
-        if ($request->has('tags')) {
-            $tags = Str::of($request->input('tags'))->explode(',');
-
-            $post->attachTags($tags);
-        }
+        $post->fill($request->except('tags'));
 
         $post->save();
+
+        if ($request->has('tags')) {
+            $post->attachTags(
+                $request->input('tags')
+            );
+        }
 
         return $post;
     }

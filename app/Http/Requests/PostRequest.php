@@ -4,11 +4,13 @@ namespace App\Http\Requests;
 
 use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 /**
  * Class PostRequest
  *
  * @property-read Post $post
+ * @property-read string $tags
  */
 class PostRequest extends FormRequest
 {
@@ -35,6 +37,14 @@ class PostRequest extends FormRequest
             'description' => 'required|max:255',
             'content' => 'required',
             'is_posted' => 'boolean',
+            'tags' => 'array',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'tags' => explode(',', $this->tags),
+        ]);
     }
 }
