@@ -5,5 +5,5 @@
             fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
     </div>
 
-    @include('layout.includes.tag-cloud')
+    @include('layout.includes.tags-cloud')
 </aside>

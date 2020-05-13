@@ -17,10 +17,8 @@ class PostController extends Controller
 {
     private PostRepositoryInterface $postRepository;
 
-    public function __construct(TagService $tagService, PostRepositoryInterface $postRepository)
+    public function __construct(PostRepositoryInterface $postRepository)
     {
-        parent::__construct($tagService);
-
         $this->postRepository = $postRepository;
     }
 

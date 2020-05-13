@@ -2,20 +2,20 @@
 
 namespace App\Services;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 use Throwable;
 
 class PostService
 {
     /**
-     * @param  FormRequest  $request
+     * @param  PostRequest  $request
      * @param  Post|null  $post
      * @return Post|null
      * @throws Throwable
      */
-    public function updateOrCreate(FormRequest $request, Post $post = null): Post
+    public function updateOrCreate(PostRequest $request, Post $post = null): Post
     {
         $post = $post ?: app(Post::class);
 
@@ -24,8 +24,8 @@ class PostService
         $post->save();
 
         if ($request->has('tags')) {
-            $post->syncTags(
-                $request->input('tags')
+            $post->syncTagsByTagNames(
+                $request->tags
             );
         }
 

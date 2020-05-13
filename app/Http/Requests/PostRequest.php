@@ -43,8 +43,23 @@ class PostRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $this->merge([
-            'tags' => explode(',', $this->tags),
-        ]);
+        $this->merge(
+            [
+                'tags' => explode(',', $this->tags),
+            ]
+        );
+    }
+    protected function passedValidation()
+    {
+        $tags =
+            collect($this->tags)
+                ->map(fn($val) => Str::of($val)->trim())
+                ->reject(fn($val) => Str::of($val)->isEmpty());
+
+        $this->merge(
+            [
+                'tags' => $tags,
+            ]
+        );
     }
 }

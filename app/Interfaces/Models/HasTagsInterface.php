@@ -2,7 +2,9 @@
 
 namespace App\Interfaces\Models;
 
+use Illuminate\Support\Collection;
+
 interface HasTagsInterface
 {
-    public function syncTags(array $tags): bool;
+    public function syncTagsByTagNames($tags): bool;
 }

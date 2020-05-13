@@ -5,53 +5,47 @@ namespace App\Models\Concerns;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Throwable;
 
 trait HasTags
 {
     /**
      * Создает (если ещё этого тега нет) и сохраняет теги, беря за основу их название.
      *
-     * @param  $tags
+     * @param  Collection|array  $tags
      * @return bool
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function syncTags($tags): bool
+    public function syncTagsByTagNames($tags): bool
     {
         throw_unless(
             Arr::accessible($tags),
-            new \Exception('Tags must be accessible!')
+            new \Exception('Tags must be an Array or Collection!')
         );
 
-        $tags = collect($tags)
-            ->map(
-                function ($val) {
-                    return Str::of($val)->trim();
-                }
-            )
-            ->reject(
-                function ($val) {
-                    return Str::of($val)->isEmpty();
-                }
-            );
+        if (is_array($tags)) {
+            $tags = collect($tags);
+        }
 
         if ($tags->isNotEmpty()) {
-            $tagsToAttach = [];
+            $tagIdsToSync = [];
 
             $tags->map(
-                function ($tag) use (&$tagsToAttach) {
+                function ($tagName) use (&$tagIdsToSync) {
                     $tag = tap(
                         Tag::firstOrCreate(
-                            ['name' => $tag],
-                            ['slug' => Str::slug($tag)]
+                            ['name' => $tagName],
+                            ['slug' => Str::slug($tagName)]/**/
                         )
                     )->save();
 
-                    $tagsToAttach[] = $tag->id;
+                    $tagIdsToSync[] = $tag->id;
                 }
             );
 
-            return (bool)$this->tags()->sync($tagsToAttach);
+            return (bool)$this->tags()->sync($tagIdsToSync);
         }
 
         return true;
