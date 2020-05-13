@@ -35,3 +35,10 @@ Route::get('/tags/{tag:slug}', 'TagController@show')->name('tags.show');
  */
 Route::get('/about', 'BaseController@about')->name('page.about');
 Route::get('/', 'PostController@index')->name('homepage');
+
+/**
+ * Tests
+ */
+Route::get('/test', function () {
+    
+});
