@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\DateHelper;
 use App\Interfaces\Models\HasTagsInterface;
 use App\Interfaces\Models\HasUrlInterface;
 use Eloquent;

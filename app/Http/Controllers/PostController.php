@@ -4,14 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
-use App\Models\Tag;
 use App\Services\PostService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Throwable;
 
