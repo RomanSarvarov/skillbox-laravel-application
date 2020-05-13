@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use App\Repositories\Posts\PostRepositoryInterface;
 use App\Services\PostService;
+use App\Services\TagService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -13,6 +15,15 @@ use Throwable;
 
 class PostController extends Controller
 {
+    private PostRepositoryInterface $postRepository;
+
+    public function __construct(TagService $tagService, PostRepositoryInterface $postRepository)
+    {
+        parent::__construct($tagService);
+
+        $this->postRepository = $postRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +31,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('pages.base.homepage')
-            ->with('posts', Post::latest()->get());
+        $posts = $this->postRepository->getPostsForLoop();
+
+        return view('pages.base.homepage', compact('posts'));
     }
 
     /**

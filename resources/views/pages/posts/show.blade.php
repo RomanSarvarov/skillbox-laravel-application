@@ -21,11 +21,7 @@
         </div>
 
         <footer class="post__footer my-3">
-            @if($post->tags->isNotEmpty())
-                <div class="tags">Теги: {{ $post->tags->implode('name', ', ') }}</div>
-
-                <br />
-            @endif
+            @include('layout.includes.tags', ['tags' => $post->tags, 'class' => 'mb-4'])
 
             <a href="{{ route('homepage', [], false) }}" class="btn btn-primary">Вернуться на главную</a>
         </footer>

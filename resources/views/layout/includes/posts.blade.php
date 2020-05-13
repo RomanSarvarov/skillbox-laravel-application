@@ -10,7 +10,9 @@
                     {{ $post->description }}
                 </div>
 
-                <a href="{{ route('posts.show', $post, false) }}" class="btn btn-primary mt-4">Читать полностью</a>
+                @include('layout.includes.tags', ['tags' => $post->tags, 'class' => 'mt-4'])
+
+                <a href="{{ route('posts.show', $post, false) }}" class="btn btn-primary mt-3">Читать полностью</a>
             </article>
         @endforeach
     @else

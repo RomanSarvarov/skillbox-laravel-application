@@ -24,7 +24,7 @@ class PostService
         $post->save();
 
         if ($request->has('tags')) {
-            $post->attachTags(
+            $post->syncTags(
                 $request->input('tags')
             );
         }

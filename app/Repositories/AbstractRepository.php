@@ -13,16 +13,6 @@ abstract class AbstractRepository implements RepositoryInterface
         $this->model = app($this->getModelClass());
     }
 
-    public function getAll()
-    {
-        return $this->startConditions()->all();
-    }
-
-    public function getById(int $id)
-    {
-        return $this->startConditions()->find($id);
-    }
-
     /**
      * @return Model|Mixed
      */

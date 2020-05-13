@@ -4,5 +4,5 @@ namespace App\Interfaces\Models;
 
 interface HasTagsInterface
 {
-    public function attachTags(array $tags): bool;
+    public function syncTags(array $tags): bool;
 }
