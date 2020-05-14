@@ -26,7 +26,7 @@ class TagServiceProvider extends ServiceProvider
      */
     public function boot(TagService $tagService)
     {
-        View::composer('layout.template-parts.sidebar', function (\Illuminate\View\View $view) use ($tagService) {
+        View::composer('layout.includes.tags-cloud', function (\Illuminate\View\View $view) use ($tagService) {
             $view->with('tagsCloud', $tagService->getTagsForCloud());
         });
     }
