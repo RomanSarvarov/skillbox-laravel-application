@@ -16,4 +16,15 @@ class PostRepository extends AbstractRepository implements PostRepositoryInterfa
     {
         return $this->startConditions()->with('tags')->get();
     }
+
+    public function getPostsByUserId(int $userId = null)
+    {
+        $query = $this->startConditions()->with('tags');
+
+        if ($userId !== null) {
+            $query->where('author_id', $userId);
+        }
+
+        return $query->get();
+    }
 }

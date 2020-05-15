@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
-use Illuminate\Foundation\Http\FormRequest;
 use Throwable;
 
 class PostService
@@ -15,18 +14,21 @@ class PostService
      * @return Post|null
      * @throws Throwable
      */
-    public function updateOrCreate(PostRequest $request, Post $post = null): Post
+    public function updateOrCreateFromRequest(PostRequest $request, Post $post = null): Post
     {
         $post = $post ?: app(Post::class);
 
         $post->fill($request->except('tags'));
 
+        $post->author_id = optional($request->user())->id;
+
         $post->save();
 
         if ($request->has('tags')) {
-            $post->syncTagsByTagNames(
-                $request->tags
-            );
+            /** @var array $requestTags */
+            $requestTags = $request->tags;
+
+            $post->syncTagsByTagNames($requestTags);
         }
 
         return $post;

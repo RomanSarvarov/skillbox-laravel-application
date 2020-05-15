@@ -39,13 +39,22 @@ use App\Models\Concerns\HasUrl;
  * @property-read int|null $tags_count
  * @property-read Collection|Tag[] $tags
  * @property-read string $url
+ * @property int $author_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereAuthorId($value)
  */
 class Post extends AbstractModel implements HasUrlInterface, HasTagsInterface
 {
     use HasUrl, HasTags;
 
+    protected $guarded = ['id', 'created_at', 'updated_at', 'author_id'];
+
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id');
     }
 }

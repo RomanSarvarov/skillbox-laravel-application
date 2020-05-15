@@ -24,6 +24,10 @@
             @include('layout.includes.tags', ['tags' => $post->tags, 'class' => 'mb-4'])
 
             <a href="{{ route('homepage', [], false) }}" class="btn btn-primary">Вернуться на главную</a>
+
+            @can('update', $post)
+                <a href="{{ route('posts.edit', $post, false) }}" class="btn btn-danger">Изменить</a>
+            @endcan
         </footer>
     </section>
 @endsection

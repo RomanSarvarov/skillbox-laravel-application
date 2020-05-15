@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\Posts\PostAccessException;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Repositories\Posts\PostRepositoryInterface;
 use App\Services\PostService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
 use Throwable;
@@ -18,6 +20,10 @@ class PostController extends Controller
 
     public function __construct(PostRepositoryInterface $postRepository)
     {
+        $this->middleware('auth')->except('show');
+        $this->middleware('can:update,post')->only(['edit', 'update']);
+        $this->middleware('can:delete,post')->only(['destroy']);
+
         $this->postRepository = $postRepository;
     }
 
@@ -28,7 +34,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = $this->postRepository->getPostsForLoop();
+        $userId = auth()->id();
+
+        $posts = $this->postRepository->getPostsByUserId($userId);
 
         return view('pages.base.homepage', compact('posts'));
     }
@@ -53,7 +61,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request, PostService $postService)
     {
-        $post = $postService->updateOrCreate($request);
+        $post = $postService->updateOrCreateFromRequest($request);
 
         return redirect()->route('posts.show', $post);
     }
@@ -74,6 +82,7 @@ class PostController extends Controller
      *
      * @param  Post  $post
      * @return Factory|View
+     * @throws Throwable
      */
     public function edit(Post $post)
     {
@@ -91,7 +100,7 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post, PostService $postService): RedirectResponse
     {
-        $postService->updateOrCreate($request, $post);
+        $postService->updateOrCreateFromRequest($request, $post);
 
         return redirect()->back()
             ->with('success', 'Post was updated!');
