@@ -37,5 +37,10 @@ Route::get('/about', 'BaseController@about')->name('page.about');
 Route::get('/', 'PostController@index')->name('homepage');
 
 /**
+ * Auth
+ */
+Auth::routes();
+
+/**
  * Tests
  */

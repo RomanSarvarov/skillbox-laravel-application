@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/css/blog.css" rel="stylesheet">
+    <link href="{{ asset('css/blog.css') }}" rel="stylesheet">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>

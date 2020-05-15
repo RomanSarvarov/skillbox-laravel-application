@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
+use App\Http\View\Composers\TagsCloudComposer;
 use App\Services\TagService;
 use Illuminate\Support\ServiceProvider;
-use View;
+use Illuminate\Support\Facades\View as ViewFacade;
 
 class TagServiceProvider extends ServiceProvider
 {
@@ -21,13 +22,10 @@ class TagServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      *
-     * @param  TagService  $tagService
      * @return void
      */
-    public function boot(TagService $tagService)
+    public function boot()
     {
-        View::composer('layout.includes.tags-cloud', function (\Illuminate\View\View $view) use ($tagService) {
-            $view->with('tagsCloud', $tagService->getTagsForCloud());
-        });
+        ViewFacade::composer('layout.includes.tags-cloud', TagsCloudComposer::class);
     }
 }
