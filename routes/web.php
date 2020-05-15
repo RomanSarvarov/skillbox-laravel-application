@@ -39,6 +39,3 @@ Route::get('/', 'PostController@index')->name('homepage');
 /**
  * Tests
  */
-Route::get('/test', function () {
-
-});
