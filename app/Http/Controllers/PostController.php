@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\Posts\PostAccessException;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Repositories\Posts\PostRepositoryInterface;
 use App\Services\PostService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
 use Throwable;
