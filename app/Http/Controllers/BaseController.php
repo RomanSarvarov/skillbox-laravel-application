@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Repositories\Posts\PostRepositoryInterface;
-use App\Services\TagService;
+use App\Contracts\Repositories\PostRepository;
 
 class BaseController extends Controller
 {
-    public function index(PostRepositoryInterface $postRepository)
+    public function index(PostRepository $postRepository)
     {
         $posts = $postRepository->getPostsForLoop();
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
-use App\Repositories\Posts\PostRepositoryInterface;
+use App\Contracts\Repositories\PostRepository;
 use App\Services\PostService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -14,9 +14,9 @@ use Throwable;
 
 class PostController extends Controller
 {
-    private PostRepositoryInterface $postRepository;
+    private PostRepository $postRepository;
 
-    public function __construct(PostRepositoryInterface $postRepository)
+    public function __construct(PostRepository $postRepository)
     {
         $this->middleware('auth')->except('show');
         $this->middleware('can:update,post')->only(['edit', 'update']);

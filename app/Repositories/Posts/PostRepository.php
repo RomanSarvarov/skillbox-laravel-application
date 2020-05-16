@@ -2,10 +2,11 @@
 
 namespace App\Repositories\Posts;
 
+use App\Contracts\Repositories\PostRepository as PostRepositoryContract;
 use App\Models\Post;
 use App\Repositories\AbstractRepository;
 
-class PostRepository extends AbstractRepository implements PostRepositoryInterface
+class PostRepository extends AbstractRepository implements PostRepositoryContract
 {
     protected function getModelClass(): string
     {

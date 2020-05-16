@@ -21,7 +21,7 @@ Route::post('/contacts', 'FeedbackController@store');
 Route::get('/admin/feedbacks', 'FeedbackController@index')->name('contacts.index');
 
 /**
- * Posts
+ * Repositories
  */
 Route::resource('/posts', 'PostController');
 

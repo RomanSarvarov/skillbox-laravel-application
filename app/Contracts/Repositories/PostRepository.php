@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories\Posts;
+namespace App\Contracts\Repositories;
 
-interface PostRepositoryInterface
+interface PostRepository
 {
     public function getPostsForLoop();
     public function getPostsByUserId(int $userId);
