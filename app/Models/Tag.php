@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Interfaces\Models\HasUrlInterface;
+use App\Contracts\Models\HasUrl as HasUrlConcern;
 use App\Models\Concerns\HasUrl;
 
 
@@ -27,7 +27,7 @@ use App\Models\Concerns\HasUrl;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Tag whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Tag extends AbstractModel implements HasUrlInterface
+class Tag extends AbstractModel implements HasUrlConcern
 {
     use HasUrl;
 

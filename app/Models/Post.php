@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Helpers\DateHelper;
-use App\Interfaces\Models\HasTagsInterface;
-use App\Interfaces\Models\HasUrlInterface;
+use App\Contracts\Models\HasTags as HasTagsConcern;
+use App\Contracts\Models\HasUrl as HasUrlConcern;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -43,7 +42,7 @@ use App\Models\Concerns\HasUrl;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereAuthorId($value)
  * @property-read \App\Models\User|null $author
  */
-class Post extends AbstractModel implements HasUrlInterface, HasTagsInterface
+class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern
 {
     use HasUrl, HasTags;
 

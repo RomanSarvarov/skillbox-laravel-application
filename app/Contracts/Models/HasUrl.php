@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Interfaces\Models;
+namespace App\Contracts\Models;
 
-interface HasUrlInterface
+interface HasUrl
 {
     public function getUrlAttribute(): string;
 }
