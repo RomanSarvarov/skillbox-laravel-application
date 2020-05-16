@@ -41,6 +41,7 @@ use App\Models\Concerns\HasUrl;
  * @property-read string $url
  * @property int $author_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereAuthorId($value)
+ * @property-read \App\Models\User|null $author
  */
 class Post extends AbstractModel implements HasUrlInterface, HasTagsInterface
 {

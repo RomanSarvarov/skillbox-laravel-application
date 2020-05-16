@@ -229,6 +229,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /* App */
+        'StringHelper' => \App\Helpers\StringHelper::class,
+        'RouteHelper' => \App\Helpers\RouteHelper::class,
+
     ],
 
 ];

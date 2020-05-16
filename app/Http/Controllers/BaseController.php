@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\PostRepository;
+use StringHelper;
 
 class BaseController extends Controller
 {
