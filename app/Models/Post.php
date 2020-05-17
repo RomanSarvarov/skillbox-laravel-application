@@ -4,6 +4,9 @@ namespace App\Models;
 
 use App\Contracts\Models\HasTags as HasTagsConcern;
 use App\Contracts\Models\HasUrl as HasUrlConcern;
+use App\Events\Post\PostCreated;
+use App\Events\Post\PostDeleted;
+use App\Events\Post\PostUpdated;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -50,6 +53,12 @@ class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern
 
     protected $casts = [
         'is_posted' => 'boolean',
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => PostCreated::class,
+        'updated' => PostUpdated::class,
+        'deleted' => PostDeleted::class,
     ];
 
     public function getRouteKeyName()

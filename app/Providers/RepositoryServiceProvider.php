@@ -17,14 +17,4 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(PostRepositoryContract::class, PostRepository::class);
     }
-
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
 }

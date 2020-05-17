@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\PostRepository;
-use Gate;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 
 class BaseController extends Controller
 {
     /**
      * @param  PostRepository  $postRepository
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
      */
     public function index(PostRepository $postRepository)
     {

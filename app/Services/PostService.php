@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\Post\PostCreated;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Throwable;
@@ -16,12 +17,11 @@ class PostService
      */
     public function updateOrCreateFromRequest(PostRequest $request, Post $post = null): Post
     {
-        $post = $post ?: app(Post::class);
+        $isEditAction = $post !== null;
 
+        $post = $isEditAction ? $post : app(Post::class);
         $post->fill($request->except('tags'));
-
         $post->author_id = optional($request->user())->id;
-
         $post->save();
 
         if ($request->has('tags')) {
