@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\Repositories\PostRepository;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
-use App\Contracts\Repositories\PostRepository;
 use App\Services\PostService;
-use Gate;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
