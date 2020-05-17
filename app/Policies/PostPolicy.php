@@ -13,7 +13,7 @@ class PostPolicy
 
     public function update(User $user, Post $post)
     {
-        return $user->id === 2 ? Response::allow() : Response::deny('Test');
+        return $post->author_id === $user->id;
     }
 
     public function delete(User $user, Post $post)

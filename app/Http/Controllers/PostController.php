@@ -20,8 +20,8 @@ class PostController extends Controller
     public function __construct(PostRepository $postRepository)
     {
         $this->middleware('auth')->except('show');
-        /*$this->middleware('can:update,post')->only(['edit', 'update']);
-        $this->middleware('can:delete,post')->only(['destroy']);*/
+        $this->middleware('can:update,post')->only(['edit', 'update']);
+        $this->middleware('can:delete,post')->only(['destroy']);
 
         $this->postRepository = $postRepository;
     }
@@ -73,8 +73,6 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        abort_if(Gate::denies('show-post', $post), 403);
-
         return view('pages.posts.show')->with('post', $post);
     }
 
