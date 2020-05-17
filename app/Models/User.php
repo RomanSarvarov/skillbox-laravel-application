@@ -34,7 +34,7 @@ use Illuminate\Notifications\Notifiable;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Post[] $posts
  * @property-read int|null $posts_count
- * @property bool $is_admin
+ * @property int $is_admin
  * @method static Builder|User whereIsAdmin($value)
  */
 class User extends Authenticatable
@@ -66,6 +66,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_admin' => 'boolean',
     ];
 
     public function posts()

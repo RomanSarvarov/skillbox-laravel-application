@@ -48,6 +48,10 @@ class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern
 
     protected $guarded = ['id', 'created_at', 'updated_at', 'author_id'];
 
+    protected $casts = [
+        'is_posted' => 'boolean',
+    ];
+
     public function getRouteKeyName()
     {
         return 'slug';
