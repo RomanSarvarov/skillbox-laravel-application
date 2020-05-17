@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\UserScopes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -33,10 +34,12 @@ use Illuminate\Notifications\Notifiable;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Post[] $posts
  * @property-read int|null $posts_count
+ * @property bool $is_admin
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereIsAdmin($value)
  */
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, UserScopes;
 
     /**
      * The attributes that are mass assignable.

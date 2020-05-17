@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use App\Traits\Providers\GateRegistration;
+use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -47,7 +49,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function beforeGates()
     {
-        //
+        Gate::before(fn(User $user) => $user->is_admin ? true : null);
     }
 
     /**
