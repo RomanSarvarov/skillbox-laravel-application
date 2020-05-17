@@ -11,14 +11,12 @@ class PostPolicy
 {
     use HandlesAuthorization;
 
-    public function update(User $user, Post $post)
+    public function manipulate(User $user, Post $post): Response
     {
-        return $post->author_id === $user->id;
-    }
+        if ($post->author_id === $user->id) {
+            return $this->allow();
+        }
 
-    public function delete(User $user, Post $post)
-    {
-        return $post->author_id === $user->id;
+        return $this->deny('У вас нет доступа к этой записи!');
     }
-
 }

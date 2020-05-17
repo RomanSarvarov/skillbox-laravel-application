@@ -19,8 +19,7 @@ class PostController extends Controller
     public function __construct(PostRepository $postRepository)
     {
         $this->middleware('auth')->except('show');
-        $this->middleware('can:update,post')->only(['edit', 'update']);
-        $this->middleware('can:delete,post')->only(['destroy']);
+        $this->middleware('can:manipulate,post')->only(['edit', 'update', 'destroy']);
 
         $this->postRepository = $postRepository;
     }
