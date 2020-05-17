@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'admin_email' => env('ADMIN_EMAIL', null),
+
     'asset_url' => env('ASSET_URL', null),
 
     /*
@@ -175,7 +177,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\TagServiceProvider::class,
     ],
 
     /*
@@ -227,6 +231,10 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        /* App */
+        'StringHelper' => \App\Helpers\StringHelper::class,
+        'RouteHelper' => \App\Helpers\RouteHelper::class,
 
     ],
 

@@ -45,6 +45,12 @@
                                       rows="15">{{ old('content', $post->content) }}</textarea>
                         </div>
 
+                        <div class="form-group">
+                            <label for="tagInput">Теги через запятую</label>
+                            <input id="tagInput" name="tags" type="text" class="form-control"
+                                   value="{{ old('tags', $post->tags->implode('name', ', ')) }}"/>
+                        </div>
+
                         <div class="custom-control custom-checkbox mb-4">
                             <input type="hidden" name="is_posted" value="0"/>
                             <input type="checkbox" class="custom-control-input" name="is_posted" id="isPostedCheckbox"
@@ -56,7 +62,7 @@
 
                         @method('PATCH')
 
-                        <input type="submit" class="btn btn-primary" value="Отправить"/>
+                        <input type="submit" class="btn btn-primary" value="Сохранить"/>
                     </form>
 
                     <div class="mt-3">

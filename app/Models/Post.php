@@ -2,6 +2,18 @@
 
 namespace App\Models;
 
+use App\Contracts\Models\HasTags as HasTagsConcern;
+use App\Contracts\Models\HasUrl as HasUrlConcern;
+use App\Events\Post\PostCreated;
+use App\Events\Post\PostDeleted;
+use App\Events\Post\PostUpdated;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Carbon;
+use App\Models\Concerns\HasTags;
+use App\Models\Concerns\HasUrl;
+
 /**
  * App\Models\Post
  *
@@ -11,25 +23,51 @@ namespace App\Models;
  * @property string $description
  * @property string $content
  * @property int $is_posted
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereIsPosted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|Post newModelQuery()
+ * @method static Builder|Post newQuery()
+ * @method static Builder|Post query()
+ * @method static Builder|Post whereContent($value)
+ * @method static Builder|Post whereCreatedAt($value)
+ * @method static Builder|Post whereDescription($value)
+ * @method static Builder|Post whereId($value)
+ * @method static Builder|Post whereIsPosted($value)
+ * @method static Builder|Post whereSlug($value)
+ * @method static Builder|Post whereTitle($value)
+ * @method static Builder|Post whereUpdatedAt($value)
+ * @mixin Eloquent
+ * @property-read Collection|Tag[] $tag
+ * @property-read int|null $tags_count
+ * @property-read Collection|Tag[] $tags
+ * @property-read string $url
+ * @property int $author_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereAuthorId($value)
+ * @property-read \App\Models\User|null $author
  */
-class Post extends AbstractModel
+class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern
 {
+    use HasUrl, HasTags;
+
+    protected $guarded = ['id', 'created_at', 'updated_at', 'author_id'];
+
+    protected $casts = [
+        'is_posted' => 'boolean',
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => PostCreated::class,
+        'updated' => PostUpdated::class,
+        'deleted' => PostDeleted::class,
+    ];
+
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id');
     }
 }

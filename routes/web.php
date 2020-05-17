@@ -21,12 +21,26 @@ Route::post('/contacts', 'FeedbackController@store');
 Route::get('/admin/feedbacks', 'FeedbackController@index')->name('contacts.index');
 
 /**
- * Posts
+ * Repositories
  */
 Route::resource('/posts', 'PostController');
+
+/**
+ * Tags
+ */
+Route::get('/tags/{tag:slug}', 'TagController@show')->name('tags.show');
 
 /**
  * Misc
  */
 Route::get('/about', 'BaseController@about')->name('page.about');
 Route::get('/', 'BaseController@index')->name('homepage');
+
+/**
+ * Auth
+ */
+Auth::routes();
+
+/**
+ * Tests
+ */
