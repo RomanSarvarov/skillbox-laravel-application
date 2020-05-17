@@ -15,7 +15,6 @@ class PostPolicy
     {
         return $post->author_id === $user->id
             ? $this->allow()
-            : $this->deny('У вас нет доступа к этой записи!')
-        ;
+            : $this->deny('У вас нет доступа к этой записи!');
     }
 }

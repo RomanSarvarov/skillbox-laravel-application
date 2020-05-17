@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Gates\TestGate;
 use App\Models\User;
 use App\Traits\Providers\GateRegistration;
 use Gate;
@@ -26,8 +27,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $gates = [
-        /*'homepage' => HomepageGate::class,
-        'show-post' => PostGate::class . '@update',
+        'test' => TestGate::class,
+        /*'show-post' => PostGate::class . '@update',
         'update-post' => PostGate::class . '@update',*/
     ];
 

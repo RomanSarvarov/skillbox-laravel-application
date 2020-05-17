@@ -4,7 +4,7 @@ namespace App\Gates;
 
 use App\Models\User;
 
-class HomepageGate
+class TestGate
 {
     public function __invoke(User $user): bool
     {
