@@ -10,6 +10,8 @@
 
 @section('content')
     <section class="post">
+        @include('layout.includes.alerts')
+
         <h2 class="post__title pb-4 mb-4 font-italic border-bottom">{{ $post->title }}</h2>
 
         <div class="post__meta text-muted">Дата публикации: {{ $post->created_at->format('d.m.Y') }}</div>

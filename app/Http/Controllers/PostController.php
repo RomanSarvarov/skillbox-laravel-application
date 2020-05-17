@@ -60,7 +60,8 @@ class PostController extends Controller
     {
         $post = $postService->updateOrCreateFromRequest($request);
 
-        return redirect()->route('posts.show', $post);
+        return redirect()->route('posts.show', $post)
+            ->with('success', 'Post was created!');
     }
 
     /**
