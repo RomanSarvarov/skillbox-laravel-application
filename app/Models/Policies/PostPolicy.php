@@ -13,10 +13,9 @@ class PostPolicy
 
     public function manipulate(User $user, Post $post): Response
     {
-        if ($post->author_id === $user->id) {
-            return $this->allow();
-        }
-
-        return $this->deny('У вас нет доступа к этой записи!');
+        return $post->author_id === $user->id
+            ? $this->allow()
+            : $this->deny('У вас нет доступа к этой записи!')
+        ;
     }
 }
