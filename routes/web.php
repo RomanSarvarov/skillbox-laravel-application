@@ -18,7 +18,18 @@ use Illuminate\Support\Facades\Route;
  */
 Route::get('/contacts', 'FeedbackController@create')->name('contacts.create');
 Route::post('/contacts', 'FeedbackController@store');
-Route::get('/admin/feedbacks', 'FeedbackController@index')->name('contacts.index');
+
+/**
+ * Admin dashboard
+ */
+Route::group([
+	'prefix' => 'admin',
+	'as' => 'admin.',
+	'namespace' => 'Admin',
+	'middleware' => 'dashboard'
+], function () {
+	Route::get('/', 'AdminController@dashboard');
+});
 
 /**
  * Repositories
@@ -40,7 +51,3 @@ Route::get('/', 'BaseController@index')->name('homepage');
  * Auth
  */
 Auth::routes();
-
-/**
- * Tests
- */

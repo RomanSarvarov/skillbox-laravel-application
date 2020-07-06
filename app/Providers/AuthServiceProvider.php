@@ -50,7 +50,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function beforeGates()
     {
-        Gate::before(fn(User $user) => $user->is_admin ? true : null);
+        Gate::before(fn(User $user) => $user->isAdmin()
+	        ? true
+	        : null);
     }
 
     /**

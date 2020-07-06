@@ -49,25 +49,50 @@ class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern
 {
     use HasUrl, HasTags;
 
+	/**
+	 * @var array
+	 */
     protected $guarded = ['id', 'created_at', 'updated_at', 'author_id'];
 
+	/**
+	 * @var array
+	 */
     protected $casts = [
         'is_posted' => 'boolean',
     ];
 
+	/**
+	 * @var array
+	 */
     protected $dispatchesEvents = [
         'created' => PostCreated::class,
         'updated' => PostUpdated::class,
         'deleted' => PostDeleted::class,
     ];
 
+	/**
+	 * @return string
+	 */
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
     public function author()
     {
         return $this->belongsTo(User::class, 'author_id');
+    }
+
+	/**
+	 * @param Builder $query
+	 *
+	 * @return Builder
+	 */
+    public function scopePosted(Builder $query)
+    {
+    	return $query->where('is_posted', true);
     }
 }

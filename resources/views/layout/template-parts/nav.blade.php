@@ -43,7 +43,7 @@
             <a class="p-2 text-muted" href="{{ route('page.about', [], false) }}">О нас</a>
             <a class="p-2 text-muted" href="{{ route('contacts.create', [], false) }}">Контакты</a>
             <a class="p-2 text-muted" href="{{ route('posts.create', [], false) }}">Создать статью</a>
-            <a class="p-2 text-muted" href="{{ route('contacts.index', [], false) }}">Админ. раздел</a>
+            <a class="p-2 text-muted" href="{{ url('/admin') }}">Админ. раздел</a>
         </nav>
     </div>
 </div>

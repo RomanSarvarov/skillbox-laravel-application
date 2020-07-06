@@ -15,7 +15,11 @@ class PostRepository extends AbstractRepository implements PostRepositoryContrac
 
     public function getPostsForLoop()
     {
-        return $this->startConditions()->with('tags')->get();
+        return $this->startConditions()
+            ->with('tags')
+	        ->posted()
+            ->latest()
+            ->get();
     }
 
     public function getPostsByUserId(int $userId = null)

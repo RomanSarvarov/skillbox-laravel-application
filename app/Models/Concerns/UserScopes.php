@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait UserScopes
 {
-    public function scropeIsAdmin(Builder $query)
+    public function scopeAdmins(Builder $query)
     {
         return $query->where('is_admin', true);
     }

@@ -27,9 +27,7 @@
 
             <a href="{{ route('homepage', [], false) }}" class="btn btn-primary">Вернуться на главную</a>
 
-            @can('update', $post)
-                <a href="{{ route('posts.edit', $post, false) }}" class="btn btn-danger">Изменить</a>
-            @endcan
+            @postEditBtn()
         </footer>
     </section>
 @endsection
