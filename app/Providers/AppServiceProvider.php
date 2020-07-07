@@ -2,10 +2,19 @@
 
 namespace App\Providers;
 
+use App\Contracts\Services\PushAll;
+use App\Services\ThirdParty\PushAllService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * @var array
+     */
+    public $singletons = [
+        PushAll::class => PushAllService::class,
+    ];
+
     /**
      * Register any application services.
      *

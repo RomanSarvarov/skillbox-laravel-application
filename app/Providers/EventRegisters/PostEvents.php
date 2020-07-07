@@ -6,6 +6,7 @@ use App\Events\Post\PostCreated;
 use App\Events\Post\PostDeleted;
 use App\Events\Post\PostUpdated;
 use App\Listeners\Post\SendPostCreatedNotification;
+use App\Listeners\Post\SendPostCreatedPushNotification;
 use App\Listeners\Post\SendPostDeletedNotification;
 use App\Listeners\Post\SendPostUpdatedNotification;
 
@@ -19,6 +20,7 @@ class PostEvents extends AbstractEventRegister
     protected $listen = [
         PostCreated::class => [
             SendPostCreatedNotification::class,
+            SendPostCreatedPushNotification::class,
         ],
         PostUpdated::class => [
             SendPostUpdatedNotification::class,

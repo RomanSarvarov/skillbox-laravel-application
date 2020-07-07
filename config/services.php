@@ -30,4 +30,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'pushall' => [
+        'key' => env('PUSHALL_API_KEY', 'aa123391cbb13e6f7436c533b05657fd'),
+    ],
+
 ];

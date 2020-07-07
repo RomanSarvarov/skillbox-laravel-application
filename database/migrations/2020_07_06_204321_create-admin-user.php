@@ -21,7 +21,9 @@ class CreateAdminUser extends Migration
 		    'Админ уже существует!'
 	    );
 
-        factory( User::class)->create(['is_admin' => true, 'email' => 'best.admin@gmail.com']);
+        factory( User::class)
+            ->state('admin')
+            ->create(['email' => 'best.admin@gmail.com']);
     }
 
     /**

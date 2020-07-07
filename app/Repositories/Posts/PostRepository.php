@@ -8,20 +8,23 @@ use App\Repositories\AbstractRepository;
 
 class PostRepository extends AbstractRepository implements PostRepositoryContract
 {
-    protected function getModelClass(): string
-    {
-        return Post::class;
-    }
-
+    /**
+     * @return mixed
+     */
     public function getPostsForLoop()
     {
         return $this->startConditions()
-            ->with('tags')
-	        ->posted()
-            ->latest()
-            ->get();
+                    ->with('tags')
+                    ->posted()
+                    ->latest()
+                    ->get();
     }
 
+    /**
+     * @param  int|null  $userId
+     *
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
     public function getPostsByUserId(int $userId = null)
     {
         $query = $this->startConditions()->with('tags');
@@ -31,5 +34,27 @@ class PostRepository extends AbstractRepository implements PostRepositoryContrac
         }
 
         return $query->get();
+    }
+
+    /**
+     * @param  int  $days
+     *
+     * @return mixed
+     */
+    public function getLatestPostsForPeriod(int $days)
+    {
+        $dateSince = today()->subDays($days);
+
+        return $this->startConditions()
+                    ->where('created_at', '>=', $dateSince)
+                    ->get();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getModelClass(): string
+    {
+        return Post::class;
     }
 }
