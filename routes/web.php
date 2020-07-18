@@ -51,3 +51,12 @@ Route::get('/', 'BaseController@index')->name('homepage');
  * Auth
  */
 Auth::routes();
+
+/**
+ * Test
+ */
+Route::get('/test', function () {
+    $post = \App\Models\Post::find(129);
+
+    return $post->history;
+});

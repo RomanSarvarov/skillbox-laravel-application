@@ -36,6 +36,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read int|null $posts_count
  * @property bool $is_admin
  * @method static Builder|User whereIsAdmin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User admins()
  */
 class User extends Authenticatable
 {

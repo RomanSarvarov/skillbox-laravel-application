@@ -21,7 +21,9 @@ class PostService
 
         $post = $isEditAction ? $post : app(Post::class);
         $post->fill($request->except('tags'));
-        $post->author_id = optional($request->user())->id;
+        if (!$isEditAction) {
+            $post->author_id = optional($request->user())->id;
+        }
         $post->save();
 
         if ($request->has('tags')) {

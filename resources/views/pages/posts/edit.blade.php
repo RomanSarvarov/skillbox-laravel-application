@@ -74,6 +74,8 @@
                             <input type="submit" class="btn btn-danger" value="Удалить запись"/>
                         </form>
                     </div>
+
+                    @changeHistory(['model' => $post])
                 </div>
             </div>
         </div>
