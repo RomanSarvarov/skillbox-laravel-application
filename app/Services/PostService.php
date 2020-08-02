@@ -2,24 +2,29 @@
 
 namespace App\Services;
 
-use App\Events\Post\PostCreated;
-use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use Illuminate\Http\Request;
 use Throwable;
 
 class PostService
 {
     /**
-     * @param  PostRequest  $request
-     * @param  Post|null  $post
+     * @param Request $request
+     * @param Post|null $post
+     * @param string $modelName
      * @return Post|null
      * @throws Throwable
      */
-    public function updateOrCreateFromRequest(PostRequest $request, Post $post = null): Post
+    public function updateOrCreateFromRequest(
+        Request $request,
+        Post $post = null,
+        string $modelName = Post::class
+    ): Post
     {
         $isEditAction = $post !== null;
 
-        $post = $isEditAction ? $post : app(Post::class);
+        $post = $isEditAction ? $post : app($modelName);
+
         $post->fill($request->except('tags'));
         if (!$isEditAction) {
             $post->author_id = optional($request->user())->id;

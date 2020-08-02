@@ -1,9 +1,9 @@
 @extends('layout.base')
 
-@section('title', 'Главная страница')
+@section('title', 'Новости')
 
 @section('content')
     @include('layout.includes.alerts')
 
-    @include('layout.includes.articles')
+    @include('layout.includes.articles', ['posts' => $news])
 @endsection

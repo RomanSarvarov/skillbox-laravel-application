@@ -17,13 +17,15 @@
         <div class="post__meta text-muted">Дата публикации: {{ $post->created_at->format('d.m.Y') }}</div>
 
         <div class="row mt-5">
-            <div class="post__content col-10 mb-5">
+            <div class="post__content col-10 mb-3">
                 {{ $post->content }}
             </div>
         </div>
 
         <footer class="post__footer my-3">
             @include('layout.includes.tags', ['tags' => $post->tags, 'class' => 'mb-4'])
+
+            @comments(['commentable' => $post])
 
             <a href="{{ route('homepage', [], false) }}" class="btn btn-primary">Вернуться на главную</a>
 

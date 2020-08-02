@@ -5,6 +5,13 @@ namespace App\Traits\Observers;
 use App\Contracts\Models\Historable as HistorableContract;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Trait Historable
+ *
+ * @author Roman Sarvarov <roman@sarvarov.dev>
+ * @package App\Traits\Observers
+ * @ctime 02.08.2020 11:51
+ */
 trait Historable
 {
     /**

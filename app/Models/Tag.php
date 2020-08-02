@@ -32,8 +32,32 @@ class Tag extends AbstractModel implements HasUrlConcern
 {
     use HasUrl;
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
     public function posts()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->morphedByMany(Post::class, 'taggable');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function news()
+    {
+        return $this->morphedByMany(News::class, 'taggable');
+    }
+
+    /**
+     * Объединяет новости и статьи.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getArticlesAttribute()
+    {
+        return collect([
+            $this->posts,
+            $this->news,
+        ])->flatten();
     }
 }

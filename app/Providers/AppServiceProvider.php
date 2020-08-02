@@ -44,7 +44,9 @@ class AppServiceProvider extends ServiceProvider
     protected function bootBlade()
     {
         \Blade::include('layout.includes.directives.post-edit-btn', 'postEditBtn');
+        \Blade::include('layout.includes.directives.news-edit-btn', 'newsEditBtn');
         \Blade::include('layout.includes.directives.change-history', 'changeHistory');
+        \Blade::include('layout.includes.directives.comments', 'comments');
     }
 
     /**

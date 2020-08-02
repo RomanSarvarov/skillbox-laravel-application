@@ -8,6 +8,8 @@ use App\Contracts\Models\Historable;
 use App\Events\Post\PostCreated;
 use App\Events\Post\PostDeleted;
 use App\Events\Post\PostUpdated;
+use App\Traits\Models\Commentable;
+use App\Contracts\Models\Commentable as CommentableContract;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -49,9 +51,9 @@ use App\Models\Concerns\HasUrl;
  * @property-read int|null $history_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post posted()
  */
-class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern, Historable
+class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern, Historable, CommentableContract
 {
-    use HasUrl, HasTags;
+    use HasUrl, HasTags, Commentable;
 
 	/**
 	 * @var array

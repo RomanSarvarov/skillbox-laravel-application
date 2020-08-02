@@ -31,9 +31,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $userId = auth()->id();
-
-        $posts = $this->postRepository->getPostsByUserId($userId);
+        $posts = $this->postRepository->getPostsByUserId(auth()->id());
 
         return view('pages.base.homepage', compact('posts'));
     }
