@@ -17,12 +17,12 @@ class PushAllService implements PushAll
     /**
      * @var string
      */
-    private string $url = 'https://pushall.ru/api.php';
+    private string $pushType = 'self';
 
     /**
      * @var string
      */
-    private string $pushType = 'self';
+    private string $url = 'https://pushall.ru/api.php';
 
     /**
      * @var string

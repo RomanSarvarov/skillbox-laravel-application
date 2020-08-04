@@ -2,17 +2,17 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Post;
+use App\Models\News;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
 /**
- * Class PostRequest
+ * Class NewsRequest
  *
- * @property-read Post $post
+ * @property-read News $news
  * @property-read string $tags
  */
-class PostRequest extends FormRequest
+class NewsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,7 +33,7 @@ class PostRequest extends FormRequest
     {
         return [
             'title' => 'required|min:5|max:100',
-            'slug' => 'required|alpha_dash|unique:posts,slug,' . (optional($this->post)->id ?: null),
+            'slug' => 'required|alpha_dash|unique:news,slug,' . (optional($this->news)->id ?: null),
             'description' => 'required|max:255',
             'content' => 'required',
             'is_posted' => 'boolean',
@@ -49,7 +49,7 @@ class PostRequest extends FormRequest
             ]
         );
     }
-
+    
     protected function passedValidation()
     {
         $tags =

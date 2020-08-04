@@ -36,6 +36,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read int|null $posts_count
  * @property bool $is_admin
  * @method static Builder|User whereIsAdmin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User admins()
  */
 class User extends Authenticatable
 {
@@ -75,6 +76,14 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class, 'author_id');
+    }
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+    public function news()
+    {
+        return $this->hasMany(News::class, 'author_id');
     }
 
 	/**

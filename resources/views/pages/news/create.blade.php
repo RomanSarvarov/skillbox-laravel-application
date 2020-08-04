@@ -1,10 +1,6 @@
 @extends('layout.base')
 
-@php
-    /** @var \App\Models\Post $post */
-
-    $title = 'Изменение статьи';
-@endphp
+@php($title = 'Создание новой новости')
 
 @section('title', $title)
 
@@ -17,65 +13,46 @@
                 <div class="new-post__form">
                     @include('layout.includes.alerts')
 
-                    @method('PUT')
-                    <form method="POST" action="{{ route('posts.update', $post->slug, false) }}">
+                    <form method="POST" action="{{ route('news.store', [], false) }}">
                         <div class="form-group">
-                            <label for="titleInput">Название статьи</label>
-                            <input id="titleInput" name="title" type="text" class="form-control"
-                                   value="{{ old('title', $post->title) }}"/>
+                            <label for="titleInput">Название новости</label>
+                            <input id="titleInput" name="title" type="text" class="form-control" value="{{ old('title') }}"/>
                         </div>
 
                         <div class="form-group">
                             <label for="slugInput">Символьный код (Url Slug)</label>
-                            <input id="slugInput" name="slug" type="text" class="form-control"
-                                   value="{{ old('slug', $post->slug) }}"/>
+                            <input id="slugInput" name="slug" type="text" class="form-control" value="{{ old('slug') }}"/>
                         </div>
 
                         <hr class="my-5"/>
 
                         <div class="form-group">
                             <label for="descriptionInput">Краткое описание</label>
-                            <textarea id="descriptionInput" name="description" class="form-control"
-                                      rows="2">{{ old('description', $post->description) }}</textarea>
+                            <textarea id="descriptionInput" name="description" class="form-control" rows="2">{{ old('description') }}</textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="contentInput">Содержимое статьи</label>
-                            <textarea id="contentInput" name="content" class="form-control"
-                                      rows="15">{{ old('content', $post->content) }}</textarea>
+                            <textarea id="contentInput" name="content" class="form-control" rows="15">{{ old('content') }}</textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="tagInput">Теги через запятую</label>
                             <input id="tagInput" name="tags" type="text" class="form-control"
-                                   value="{{ old('tags', $post->tags->implode('name', ', ')) }}"/>
+                                   value="{{ old('tags') }}"/>
                         </div>
 
                         <div class="custom-control custom-checkbox mb-4">
                             <input type="hidden" name="is_posted" value="0"/>
                             <input type="checkbox" class="custom-control-input" name="is_posted" id="isPostedCheckbox"
-                                   value="1" {{ old('is_posted', $post->is_posted) ? 'checked' : '' }}/>
+                                   value="1" {{ old('is_posted', true) ? 'checked' : '' }}/>
                             <label class="custom-control-label" for="isPostedCheckbox">Опубликовано сейчас</label>
                         </div>
 
                         @csrf
 
-                        @method('PATCH')
-
                         <input type="submit" class="btn btn-primary" value="Сохранить"/>
                     </form>
-
-                    <div class="mt-3">
-                        <form method="POST" action="{{ route('posts.destroy', $post->slug, false) }}">
-                            @csrf
-
-                            @method('DELETE')
-
-                            <input type="submit" class="btn btn-danger" value="Удалить запись"/>
-                        </form>
-                    </div>
-
-                    @changeHistory(['model' => $post])
                 </div>
             </div>
         </div>

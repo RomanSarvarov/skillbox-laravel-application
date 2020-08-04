@@ -4,9 +4,12 @@ namespace App\Models;
 
 use App\Contracts\Models\HasTags as HasTagsConcern;
 use App\Contracts\Models\HasUrl as HasUrlConcern;
+use App\Contracts\Models\Historable;
 use App\Events\Post\PostCreated;
 use App\Events\Post\PostDeleted;
 use App\Events\Post\PostUpdated;
+use App\Traits\Models\Commentable;
+use App\Contracts\Models\Commentable as CommentableContract;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -44,10 +47,13 @@ use App\Models\Concerns\HasUrl;
  * @property int $author_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereAuthorId($value)
  * @property-read \App\Models\User|null $author
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChangeHistory[] $history
+ * @property-read int|null $history_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post posted()
  */
-class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern
+class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern, Historable, CommentableContract
 {
-    use HasUrl, HasTags;
+    use HasUrl, HasTags, Commentable;
 
 	/**
 	 * @var array
@@ -84,6 +90,14 @@ class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern
     public function author()
     {
         return $this->belongsTo(User::class, 'author_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function history()
+    {
+        return $this->morphMany(ChangeHistory::class, 'historable');
     }
 
 	/**

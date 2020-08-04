@@ -11,6 +11,6 @@
     <h1>{{ $title }}</h1>
 
     <section class="posts mt-4">
-        @include('layout.includes.posts', ['posts' => $tag->posts])
+        @include('layout.includes.articles', ['posts' => $tag->articles])
     </section>
 @endsection

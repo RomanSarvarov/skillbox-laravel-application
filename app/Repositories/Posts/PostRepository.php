@@ -6,6 +6,15 @@ use App\Contracts\Repositories\PostRepository as PostRepositoryContract;
 use App\Models\Post;
 use App\Repositories\AbstractRepository;
 
+/**
+ * Class PostRepository
+ *
+ * Используется исключительно для получения данных по записям из БД.
+ *
+ * @author Roman Sarvarov <roman@sarvarov.dev>
+ * @package App\Repositories\Posts
+ * @ctime 12.07.2020 11:26
+ */
 class PostRepository extends AbstractRepository implements PostRepositoryContract
 {
     /**

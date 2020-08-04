@@ -40,9 +40,12 @@
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
             <a class="p-2 text-muted" href="{{ route('homepage', [], false) }}">Главная</a>
+            <a class="p-2 text-muted" href="{{ route('news.index', [], false) }}">Новости</a>
             <a class="p-2 text-muted" href="{{ route('page.about', [], false) }}">О нас</a>
             <a class="p-2 text-muted" href="{{ route('contacts.create', [], false) }}">Контакты</a>
             <a class="p-2 text-muted" href="{{ route('posts.create', [], false) }}">Создать статью</a>
+            <a class="p-2 text-muted" href="{{ route('news.create', [], false) }}">Создать новость</a>
+            <a class="p-2 text-muted" href="{{ route('page.statistics', [], false) }}">Статистика</a>
             <a class="p-2 text-muted" href="{{ url('/admin') }}">Админ. раздел</a>
         </nav>
     </div>

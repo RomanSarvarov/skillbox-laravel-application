@@ -32,9 +32,16 @@ Route::group([
 });
 
 /**
- * Repositories
+ * Front-end pages
  */
 Route::resource('/posts', 'PostController');
+Route::resource('/news', 'NewsController');
+
+/**
+ * Comments
+ */
+Route::post('/posts/{post:slug}', 'CommentController@storePost');
+Route::post('/news/{news:slug}', 'CommentController@storeNews');
 
 /**
  * Tags
@@ -44,6 +51,7 @@ Route::get('/tags/{tag:slug}', 'TagController@show')->name('tags.show');
 /**
  * Misc
  */
+Route::get('/statistics', 'BaseController@statistics')->name('page.statistics');
 Route::get('/about', 'BaseController@about')->name('page.about');
 Route::get('/', 'BaseController@index')->name('homepage');
 
@@ -51,3 +59,12 @@ Route::get('/', 'BaseController@index')->name('homepage');
  * Auth
  */
 Auth::routes();
+
+/**
+ * Test
+ */
+Route::get('/test', function () {
+    $post = \App\Models\Post::find(129);
+
+    return $post->history;
+});
