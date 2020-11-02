@@ -94,7 +94,7 @@ class ReportService
      * @param User $receiver
      * @return void
      */
-    public function doReport(array $reportData, User $receiver = null)
+    public function dispatch(array $reportData, User $receiver = null)
     {
         $report = [];
 

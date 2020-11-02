@@ -37,7 +37,7 @@ class AdminController extends Controller
             'report' => 'required|array',
         ]);
 
-        $reportService->doReport(
+        $reportService->dispatch(
             $request->input('report')
         );
 
