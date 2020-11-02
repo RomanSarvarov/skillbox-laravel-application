@@ -6,7 +6,6 @@ use App\Contracts\Models\Commentable as CommentableContract;
 use App\Http\Requests\CommentStoreRequest;
 use App\Models\News;
 use App\Models\Post;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 

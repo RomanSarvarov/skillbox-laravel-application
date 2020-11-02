@@ -28,7 +28,8 @@ Route::group([
 	'namespace' => 'Admin',
 	'middleware' => 'dashboard'
 ], function () {
-	Route::get('/', 'AdminController@dashboard');
+	Route::get('/', 'AdminController@dashboard')->name('dashboard');
+	Route::post('/report', 'AdminController@report')->name('report');
 });
 
 /**
