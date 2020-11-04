@@ -59,7 +59,7 @@ class ReportService
             self::ITEM_USERS => 'Пользователи',
         ];
 
-        if (is_null($item)) {
+        if (! $item) {
             return $binds;
         }
 
@@ -80,7 +80,7 @@ class ReportService
             self::ITEM_USERS => User::class,
         ];
 
-        if (is_null($item)) {
+        if (! $item) {
             return $binds;
         }
 
@@ -88,13 +88,32 @@ class ReportService
     }
 
     /**
-     * Генерирует отчёт.
+     * Генерирует отчёт от правляет его пользователю.
      *
      * @param array $reportData
      * @param User $receiver
      * @return void
      */
     public function dispatch(array $reportData, User $receiver = null)
+    {
+        $report = $this->generateReport($reportData);
+
+        if (! $report) {
+            return;
+        }
+
+        dispatch(
+            new DispatchReportJob($report, $receiver ?: auth()->user())
+        );
+    }
+
+    /**
+     * Генерирует отчёт.
+     *
+     * @param array $reportData
+     * @return array
+     */
+    protected function generateReport(array $reportData)
     {
         $report = [];
 
@@ -105,12 +124,6 @@ class ReportService
             ];
         }
 
-        if (! $report) {
-            return;
-        }
-
-        dispatch(
-            new DispatchReportJob($report, $receiver ?: auth()->user())
-        );
+        return $report;
     }
 }
