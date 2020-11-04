@@ -46,6 +46,26 @@ class ReportService
     public const ITEM_USERS = 5;
 
     /**
+     * Генерирует отчёт от правляет его пользователю.
+     *
+     * @param array $reportData
+     * @param User $receiver
+     * @return void
+     */
+    public function dispatch(array $reportData, User $receiver = null)
+    {
+        $report = $this->generateReport($reportData);
+
+        if (! $report) {
+            return;
+        }
+
+        dispatch(
+            new DispatchReportJob($report, $receiver ?: auth()->user())
+        );
+    }
+
+    /**
      * @param int|null $item
      * @return array|string
      */
@@ -85,26 +105,6 @@ class ReportService
         }
 
         return $binds[$item] ?? null;
-    }
-
-    /**
-     * Генерирует отчёт от правляет его пользователю.
-     *
-     * @param array $reportData
-     * @param User $receiver
-     * @return void
-     */
-    public function dispatch(array $reportData, User $receiver = null)
-    {
-        $report = $this->generateReport($reportData);
-
-        if (! $report) {
-            return;
-        }
-
-        dispatch(
-            new DispatchReportJob($report, $receiver ?: auth()->user())
-        );
     }
 
     /**
