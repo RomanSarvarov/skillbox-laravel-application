@@ -37,6 +37,8 @@ use Illuminate\Notifications\Notifiable;
  * @property bool $is_admin
  * @method static Builder|User whereIsAdmin($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User admins()
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\News[] $news
+ * @property-read int|null $news_count
  */
 class User extends Authenticatable
 {
