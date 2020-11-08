@@ -25,6 +25,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ChangeHistory whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ChangeHistory whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $user_id
+ * @property-read \App\Models\User|null $user
+ * @method static Builder|ChangeHistory whereUserId($value)
  */
 class ChangeHistory extends Model
 {

@@ -8,6 +8,7 @@ use App\Contracts\Models\Historable;
 use App\Events\Post\PostCreated;
 use App\Events\Post\PostDeleted;
 use App\Events\Post\PostUpdated;
+use App\Events\Post\PostUpdating;
 use App\Traits\Models\Commentable;
 use App\Contracts\Models\Commentable as CommentableContract;
 use Eloquent;
@@ -50,6 +51,8 @@ use App\Models\Concerns\HasUrl;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChangeHistory[] $history
  * @property-read int|null $history_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post posted()
+ * @property-read Collection|\App\Models\Comment[] $comments
+ * @property-read int|null $comments_count
  */
 class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern, Historable, CommentableContract
 {
@@ -73,6 +76,7 @@ class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern, Histo
     protected $dispatchesEvents = [
         'created' => PostCreated::class,
         'updated' => PostUpdated::class,
+        'updating' => PostUpdating::class,
         'deleted' => PostDeleted::class,
     ];
 

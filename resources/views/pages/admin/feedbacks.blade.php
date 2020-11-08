@@ -7,6 +7,8 @@
 @section('content')
     <h2 class="pb-4 mb-4 font-italic border-bottom">{{ $title }}</h2>
 
+    @include('layout.includes.alerts')
+
     <section class="feedbacks">
         <div class="row">
             <div class="mt-5 col-12">
@@ -62,6 +64,23 @@
                     @else
                         <p>Обращений не найдено!</p>
                     @endif
+                </div>
+
+                <div class="reports mb-5">
+                    <h3 class="mb-3">Отчёты</h3>
+
+                    <form method="POST" action="{{ route('admin.report') }}">
+                        <strong>Итого:</strong>
+                        <select class="w-100" style="height: 150px" name="report[]" multiple required>
+                            @foreach($reportSelectOptions as $id => $name)
+                                <option value="{{ $id }}">{{ $name }}</option>
+                            @endforeach
+                        </select>
+
+                        @csrf
+
+                        <button class="btn btn-primary mt-2" type="submit">Сгенерировать отчет</button>
+                    </form>
                 </div>
             </div>
         </div>

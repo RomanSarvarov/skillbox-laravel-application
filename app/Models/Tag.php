@@ -27,6 +27,9 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static Builder|Tag whereSlug($value)
  * @method static Builder|Tag whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Support\Collection $articles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\News[] $news
+ * @property-read int|null $news_count
  */
 class Tag extends AbstractModel implements HasUrlConcern
 {

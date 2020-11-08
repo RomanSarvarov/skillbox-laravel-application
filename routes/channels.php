@@ -1,5 +1,6 @@
 <?php
 
+use App\Broadcasting\AdminChannel;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\Broadcast;
 | used to check if an authenticated user can listen to the channel.
 |
 */
+
+Broadcast::channel('App.User.Admin', AdminChannel::class, ['guards' => 'web']);
 
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
