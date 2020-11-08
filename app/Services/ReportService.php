@@ -54,14 +54,8 @@ class ReportService
      */
     public function dispatch(array $reportData, User $receiver = null)
     {
-        $report = $this->generateReport($reportData);
-
-        if (! $report) {
-            return;
-        }
-
         dispatch(
-            new DispatchReportJob($report, $receiver ?: auth()->user())
+            new DispatchReportJob($reportData, $receiver ?: auth()->user())
         );
     }
 
@@ -113,7 +107,7 @@ class ReportService
      * @param array $reportData
      * @return array
      */
-    protected function generateReport(array $reportData)
+    public function generateReport(array $reportData)
     {
         $report = [];
 

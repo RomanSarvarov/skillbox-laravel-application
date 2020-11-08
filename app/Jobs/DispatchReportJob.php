@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Mail\DispatchReportMail;
 use App\Models\User;
+use App\Services\ReportService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -18,7 +19,7 @@ class DispatchReportJob implements ShouldQueue
     /**
      * @var array
      */
-    protected array $report = [];
+    protected array $reportData = [];
 
     /**
      * @var User
@@ -26,15 +27,22 @@ class DispatchReportJob implements ShouldQueue
     protected User $receiver;
 
     /**
+     * @var ReportService
+     */
+    protected ReportService $reportService;
+
+    /**
      * Create a new job instance.
      *
-     * @param array $report
+     * @param array $reportData
      * @param User $receiver
+     * @param ReportService $reportService
      */
-    public function __construct(array $report, User $receiver)
+    public function __construct(array $reportData, User $receiver, ReportService $reportService)
     {
-        $this->report = $report;
         $this->receiver = $receiver;
+        $this->reportData = $reportData;
+        $this->reportService = $reportService;
     }
 
     /**
@@ -44,8 +52,16 @@ class DispatchReportJob implements ShouldQueue
      */
     public function handle()
     {
+        $report = $this->reportService->generateReport(
+            $this->reportData
+        );
+
+        if (! $report) {
+            return;
+        }
+
         Mail::to($this->receiver->email)->send(
-            new DispatchReportMail($this->report)
+            new DispatchReportMail($report)
         );
     }
 }
