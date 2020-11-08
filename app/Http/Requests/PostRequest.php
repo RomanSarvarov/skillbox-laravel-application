@@ -49,6 +49,7 @@ class PostRequest extends FormRequest
             ]
         );
     }
+
     protected function passedValidation()
     {
         $tags =

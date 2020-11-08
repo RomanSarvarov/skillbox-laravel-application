@@ -18,12 +18,31 @@ use Illuminate\Support\Facades\Route;
  */
 Route::get('/contacts', 'FeedbackController@create')->name('contacts.create');
 Route::post('/contacts', 'FeedbackController@store');
-Route::get('/admin/feedbacks', 'FeedbackController@index')->name('contacts.index');
 
 /**
- * Repositories
+ * Admin dashboard
+ */
+Route::group([
+	'prefix' => 'admin',
+	'as' => 'admin.',
+	'namespace' => 'Admin',
+	'middleware' => 'dashboard'
+], function () {
+	Route::get('/', 'AdminController@dashboard')->name('dashboard');
+	Route::post('/report', 'AdminController@report')->name('report');
+});
+
+/**
+ * Front-end pages
  */
 Route::resource('/posts', 'PostController');
+Route::resource('/news', 'NewsController');
+
+/**
+ * Comments
+ */
+Route::post('/posts/{post:slug}', 'CommentController@storePost');
+Route::post('/news/{news:slug}', 'CommentController@storeNews');
 
 /**
  * Tags
@@ -33,6 +52,7 @@ Route::get('/tags/{tag:slug}', 'TagController@show')->name('tags.show');
 /**
  * Misc
  */
+Route::get('/statistics', 'BaseController@statistics')->name('page.statistics');
 Route::get('/about', 'BaseController@about')->name('page.about');
 Route::get('/', 'BaseController@index')->name('homepage');
 
@@ -42,5 +62,10 @@ Route::get('/', 'BaseController@index')->name('homepage');
 Auth::routes();
 
 /**
- * Tests
+ * Test
  */
+Route::get('/test', function () {
+    $post = \App\Models\Post::find(129);
+
+    return $post->history;
+});

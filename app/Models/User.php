@@ -34,8 +34,11 @@ use Illuminate\Notifications\Notifiable;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Post[] $posts
  * @property-read int|null $posts_count
- * @property int $is_admin
+ * @property bool $is_admin
  * @method static Builder|User whereIsAdmin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User admins()
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\News[] $news
+ * @property-read int|null $news_count
  */
 class User extends Authenticatable
 {
@@ -69,8 +72,29 @@ class User extends Authenticatable
         'is_admin' => 'boolean',
     ];
 
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
     public function posts()
     {
         return $this->hasMany(Post::class, 'author_id');
+    }
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+    public function news()
+    {
+        return $this->hasMany(News::class, 'author_id');
+    }
+
+	/**
+	 * Является ли пользователь администратором.
+	 *
+	 * @return bool
+	 */
+    public function isAdmin()
+    {
+    	return $this->is_admin;
     }
 }

@@ -2,9 +2,7 @@
 
 namespace App\Providers\EventRegisters;
 
-use App\Contracts\Providers\EventRegister;
-
-abstract class AbstractEventRegister implements EventRegister
+abstract class AbstractEventRegister
 {
     protected $listen = [];
 

@@ -1,0 +1,15 @@
+<?php
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+use App\Models\Tag;
+use Faker\Generator as Faker;
+
+$factory->define(Tag::class, function (Faker $faker) {
+    return [
+        'name' => $faker->unique()->word,
+        'slug' => $faker->unique()->word,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ];
+});

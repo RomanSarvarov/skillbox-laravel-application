@@ -16,6 +16,7 @@ class SendPostCreatedNotification
      */
     public function handle(PostCreatedEvent $event)
     {
-        Notification::route('mail', config('app.admin_email'))->notify(new PostCreatedNotification($event->post));
+        Notification::route('mail', config('app.admin_email'))
+            ->notify(new PostCreatedNotification($event->post));
     }
 }
