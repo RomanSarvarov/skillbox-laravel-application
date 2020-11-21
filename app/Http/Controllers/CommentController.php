@@ -17,6 +17,7 @@ class CommentController extends Controller
      * @param CommentStoreRequest $request
      * @param Post $post
      * @return RedirectResponse
+     * @throws \Exception
      */
     public function storePost(CommentStoreRequest $request, Post $post)
     {
@@ -29,6 +30,7 @@ class CommentController extends Controller
      * @param CommentStoreRequest $request
      * @param News $news
      * @return RedirectResponse
+     * @throws \Exception
      */
     public function storeNews(CommentStoreRequest $request, News $news)
     {
@@ -39,6 +41,7 @@ class CommentController extends Controller
      * @param Request $request
      * @param CommentableContract $model
      * @return RedirectResponse
+     * @throws \Exception
      */
     protected function storeAction(Request $request, CommentableContract $model)
     {

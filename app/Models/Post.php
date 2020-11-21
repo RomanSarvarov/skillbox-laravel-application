@@ -70,6 +70,11 @@ class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern, Histo
         'is_posted' => 'boolean',
     ];
 
+    /**
+     * @var string
+     */
+    protected static $cacheSlug = 'posts';
+
 	/**
 	 * @var array
 	 */
@@ -80,7 +85,25 @@ class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern, Histo
         'deleted' => PostDeleted::class,
     ];
 
-	/**
+    /**
+     * @return void
+     */
+    protected static function booted()
+    {
+        $flushCache = function () {
+            cache()->tags(static::$cacheSlug)->flush();
+        };
+
+        static::saved(function (self $post) use ($flushCache) {
+            $flushCache();
+        });
+
+        static::deleted(function (self $post) use ($flushCache) {
+            $flushCache();
+        });
+    }
+
+    /**
 	 * @return string
 	 */
     public function getRouteKeyName()

@@ -10,12 +10,18 @@ use Illuminate\View\View;
 class BaseController extends Controller
 {
     /**
-     * @param  PostRepository  $postRepository
+     * @param PostRepository $postRepository
      * @return Factory|View
+     * @throws \Exception
      */
     public function index(PostRepository $postRepository)
     {
-        $posts = $postRepository->getPostsForLoop();
+        $posts = cache()->tags('posts')->remember(
+            "posts_index", now()->addHours(config('cache.default_hours')),
+            function () use ($postRepository) {
+                return $postRepository->getPostsForLoop();
+            }
+        );
 
         return view('pages.base.homepage', compact('posts'));
     }

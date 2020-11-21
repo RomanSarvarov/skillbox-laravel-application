@@ -3,6 +3,7 @@
 namespace App\Traits\Models;
 
 use App\Models\Comment;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class Commentable
@@ -21,5 +22,33 @@ trait Commentable
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    /**
+     * @param bool $cache
+     * @return Collection
+     * @throws \Exception
+     */
+    public function getComments($cache = true)
+    {
+        if (! $cache) {
+            return $this->comments;
+        }
+
+        return cache()->tags('comments')->remember(
+            $this->getCommentsCacheKey(),
+            now()->addHours(config('cache.default_hours')),
+            function () {
+                return $this->comments;
+            }
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public function getCommentsCacheKey()
+    {
+        return 'comments|' . get_class($this) . "|{$this->id}";
     }
 }

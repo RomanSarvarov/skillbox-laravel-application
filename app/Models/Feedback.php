@@ -28,4 +28,22 @@ use Illuminate\Support\Carbon;
 class Feedback extends AbstractModel
 {
     protected $table = 'feedbacks';
+
+    /**
+     * @return void
+     */
+    protected static function booted()
+    {
+        $flushCache = function () {
+            cache()->forget('feedbacks');
+        };
+
+        static::saved(function (self $feedback) use ($flushCache) {
+            $flushCache();
+        });
+
+        static::deleted(function (self $feedback) use ($flushCache) {
+            $flushCache();
+        });
+    }
 }

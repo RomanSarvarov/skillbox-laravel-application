@@ -36,6 +36,24 @@ class Tag extends AbstractModel implements HasUrlConcern
     use HasUrl;
 
     /**
+     * @return void
+     */
+    protected static function booted()
+    {
+        $flushCache = function () {
+            cache()->tags('tags')->flush();
+        };
+
+        static::saved(function (self $tag) use ($flushCache) {
+            $flushCache();
+        });
+
+        static::deleted(function (self $tag) use ($flushCache) {
+            $flushCache();
+        });
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function posts()
@@ -54,13 +72,19 @@ class Tag extends AbstractModel implements HasUrlConcern
     /**
      * Объединяет новости и статьи.
      *
-     * @return \Illuminate\Support\Collection
+     * @return void
+     * @throws \Exception
      */
     public function getArticlesAttribute()
     {
-        return collect([
-            $this->posts,
-            $this->news,
-        ])->flatten();
+        return cache()->tags(['tags', 'news', 'posts'])->remember("articles|tag_{$this->id}",
+            now()->addHours(config('cache.default_hours')),
+            function () {
+                return collect([
+                    $this->posts,
+                    $this->news,
+                ])->flatten();
+            }
+        );
     }
 }

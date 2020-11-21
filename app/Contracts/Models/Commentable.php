@@ -2,6 +2,8 @@
 
 namespace App\Contracts\Models;
 
+use Illuminate\Database\Eloquent\Collection;
+
 /**
  * Interface Commentable
  *
@@ -17,4 +19,16 @@ interface Commentable
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function comments();
+
+    /**
+     * @param bool $cache
+     * @return Collection
+     * @throws \Exception
+     */
+    public function getComments($cache = true);
+
+    /**
+     * @return string
+     */
+    public function getCommentsCacheKey();
 }

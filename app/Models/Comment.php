@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\Models\Commentable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $author
- * @property-read Model|\Eloquent $commentable
+ * @property-read Model|\Eloquent|Commentable $commentable
  * @method static \Illuminate\Database\Eloquent\Builder|Comment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Comment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Comment query()
@@ -34,6 +35,26 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = ['content', 'author_id'];
+
+    /**
+     * @return void
+     */
+    protected static function booted()
+    {
+        $flushCache = function (self $comment) {
+            cache()->tags('comments')->forget(
+                $comment->commentable->getCommentsCacheKey()
+            );
+        };
+
+        static::saved(function (self $comment) use ($flushCache) {
+            $flushCache($comment);
+        });
+
+        static::deleted(function (self $comment) use ($flushCache) {
+            $flushCache($comment);
+        });
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

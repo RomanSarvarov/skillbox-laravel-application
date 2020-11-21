@@ -27,10 +27,18 @@ class NewsController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function index()
     {
-        $news = $this->newsRepository->getPostsByUserId(auth()->id());
+        $userId = auth()->id();
+
+        $news = cache()->tags('news')->remember(
+            "news|user_$userId", now()->addHours(config('cache.default_hours')),
+            function () use ($userId) {
+                return $this->newsRepository->getPostsByUserId($userId);
+            }
+        );
 
         return view('pages.news.index')->withNews($news);
     }
