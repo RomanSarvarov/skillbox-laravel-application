@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Contracts\Models\HasUrl as HasUrlConcern;
 use App\Models\Concerns\HasUrl;
+use App\Traits\Models\FlushCacheOnModelChange;
 use Illuminate\Database\Eloquent\Builder;
 
 
@@ -33,25 +34,7 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class Tag extends AbstractModel implements HasUrlConcern
 {
-    use HasUrl;
-
-    /**
-     * @return void
-     */
-    protected static function booted()
-    {
-        $flushCache = function () {
-            cache()->tags('tags')->flush();
-        };
-
-        static::saved(function (self $tag) use ($flushCache) {
-            $flushCache();
-        });
-
-        static::deleted(function (self $tag) use ($flushCache) {
-            $flushCache();
-        });
-    }
+    use HasUrl, FlushCacheOnModelChange;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany

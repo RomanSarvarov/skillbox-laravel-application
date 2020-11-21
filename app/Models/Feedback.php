@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Models\FlushCacheOnModelChange;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -27,23 +28,10 @@ use Illuminate\Support\Carbon;
  */
 class Feedback extends AbstractModel
 {
-    protected $table = 'feedbacks';
+    use FlushCacheOnModelChange;
 
     /**
-     * @return void
+     * @var string
      */
-    protected static function booted()
-    {
-        $flushCache = function () {
-            cache()->forget('feedbacks');
-        };
-
-        static::saved(function (self $feedback) use ($flushCache) {
-            $flushCache();
-        });
-
-        static::deleted(function (self $feedback) use ($flushCache) {
-            $flushCache();
-        });
-    }
+    protected $table = 'feedbacks';
 }

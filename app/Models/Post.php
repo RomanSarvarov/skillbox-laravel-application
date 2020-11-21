@@ -11,6 +11,7 @@ use App\Events\Post\PostUpdated;
 use App\Events\Post\PostUpdating;
 use App\Traits\Models\Commentable;
 use App\Contracts\Models\Commentable as CommentableContract;
+use App\Traits\Models\FlushCacheOnModelChange;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -56,7 +57,7 @@ use App\Models\Concerns\HasUrl;
  */
 class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern, Historable, CommentableContract
 {
-    use HasUrl, HasTags, Commentable;
+    use HasUrl, HasTags, Commentable, FlushCacheOnModelChange;
 
 	/**
 	 * @var array
@@ -90,17 +91,7 @@ class Post extends AbstractModel implements HasUrlConcern, HasTagsConcern, Histo
      */
     protected static function booted()
     {
-        $flushCache = function () {
-            cache()->tags(static::$cacheSlug)->flush();
-        };
 
-        static::saved(function (self $post) use ($flushCache) {
-            $flushCache();
-        });
-
-        static::deleted(function (self $post) use ($flushCache) {
-            $flushCache();
-        });
     }
 
     /**

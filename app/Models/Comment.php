@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\Models\Commentable;
+use App\Traits\Models\FlushCacheOnModelChange;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -31,29 +32,22 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
+    use FlushCacheOnModelChange;
+
     /**
      * @var array
      */
     protected $fillable = ['content', 'author_id'];
 
     /**
-     * @return void
+     * @param $comment
+     * @throws \Exception
      */
-    protected static function booted()
+    protected static function clearCache($comment)
     {
-        $flushCache = function (self $comment) {
-            cache()->tags('comments')->forget(
-                $comment->commentable->getCommentsCacheKey()
-            );
-        };
-
-        static::saved(function (self $comment) use ($flushCache) {
-            $flushCache($comment);
-        });
-
-        static::deleted(function (self $comment) use ($flushCache) {
-            $flushCache($comment);
-        });
+        cache()->tags('comments')->forget(
+            $comment->commentable->getCommentsCacheKey()
+        );
     }
 
     /**

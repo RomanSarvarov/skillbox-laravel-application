@@ -16,7 +16,7 @@ class BaseController extends Controller
      */
     public function index(PostRepository $postRepository)
     {
-        $posts = cache()->tags('posts')->remember(
+        $posts = cache()->tags(['posts', 'comments', 'tags'])->remember(
             "posts_index", now()->addHours(config('cache.default_hours')),
             function () use ($postRepository) {
                 return $postRepository->getPostsForLoop();

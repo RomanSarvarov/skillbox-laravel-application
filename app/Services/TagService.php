@@ -12,7 +12,7 @@ class TagService
      */
     public function getTagsForCloud()
     {
-        return cache()->tags(['posts', 'news'])->remember(
+        return cache()->tags(['tags', 'posts', 'news'])->remember(
             'tags_cloud', now()->addHours(
                 config('cache.default_hours')
             ), function () {
