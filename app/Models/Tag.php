@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Contracts\Models\HasUrl as HasUrlConcern;
 use App\Models\Concerns\HasUrl;
+use App\Traits\Models\FlushCacheOnModelChange;
 use Illuminate\Database\Eloquent\Builder;
 
 
@@ -33,7 +34,7 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class Tag extends AbstractModel implements HasUrlConcern
 {
-    use HasUrl;
+    use HasUrl, FlushCacheOnModelChange;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
@@ -54,13 +55,19 @@ class Tag extends AbstractModel implements HasUrlConcern
     /**
      * Объединяет новости и статьи.
      *
-     * @return \Illuminate\Support\Collection
+     * @return void
+     * @throws \Exception
      */
     public function getArticlesAttribute()
     {
-        return collect([
-            $this->posts,
-            $this->news,
-        ])->flatten();
+        return cache()->tags(['tags', 'news', 'posts'])->remember("articles|tag_{$this->id}",
+            now()->addHours(config('cache.default_hours')),
+            function () {
+                return collect([
+                    $this->posts,
+                    $this->news,
+                ])->flatten();
+            }
+        );
     }
 }

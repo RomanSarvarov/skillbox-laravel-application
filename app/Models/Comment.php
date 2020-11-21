@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Models\Commentable;
+use App\Traits\Models\FlushCacheOnModelChange;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $author
- * @property-read Model|\Eloquent $commentable
+ * @property-read Model|\Eloquent|Commentable $commentable
  * @method static \Illuminate\Database\Eloquent\Builder|Comment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Comment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Comment query()
@@ -30,10 +32,23 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
+    use FlushCacheOnModelChange;
+
     /**
      * @var array
      */
     protected $fillable = ['content', 'author_id'];
+
+    /**
+     * @param $comment
+     * @throws \Exception
+     */
+    protected static function clearCache($comment)
+    {
+        cache()->tags('comments')->forget(
+            $comment->commentable->getCommentsCacheKey()
+        );
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

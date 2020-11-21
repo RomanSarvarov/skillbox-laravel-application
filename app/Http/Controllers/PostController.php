@@ -28,10 +28,18 @@ class PostController extends Controller
      * Display a listing of the resource.
      *
      * @return Factory|View
+     * @throws \Exception
      */
     public function index()
     {
-        $posts = $this->postRepository->getPostsByUserId(auth()->id());
+        $userId = auth()->id();
+
+        $posts = cache()->tags('posts')->remember(
+            "posts|user_$userId", now()->addHours(config('cache.default_hours')),
+            function () use ($userId) {
+                return $this->postRepository->getPostsByUserId($userId);
+            }
+        );
 
         return view('pages.base.homepage', compact('posts'));
     }

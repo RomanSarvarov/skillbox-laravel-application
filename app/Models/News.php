@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * App\Models\News
  *
@@ -41,5 +39,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class News extends Post
 {
-    //
+    /**
+     * @var string
+     */
+    protected static $cacheSlug = 'news';
 }

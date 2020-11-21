@@ -4,7 +4,7 @@
     <h3>Комментарии</h3>
 
     <div class="comments__list">
-        @forelse($commentable->comments as $comment)
+        @forelse($commentable->getComments() as $comment)
             <div class="comment card mb-3">
                 <div class="card-body">
                     <div class="comment__author"><b>Автор:</b> {{ $comment->author->name }}</div>

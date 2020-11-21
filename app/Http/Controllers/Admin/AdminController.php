@@ -13,11 +13,26 @@ class AdminController extends Controller
     /**
      * @param ReportService $reportService
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
 	public function dashboard(ReportService $reportService)
 	{
-		$feedbacks = Feedback::latest()->get();
-		$posts = Post::latest()->get();
+		$feedbacks = cache()->remember(
+		    'feedbacks',
+            now()->addHours(config('cache.default_hours')),
+            function () {
+		        return Feedback::latest()->get();
+            }
+        );
+
+		$posts = cache()->tags('posts')->remember(
+		    'posts_dashboard',
+            now()->addHours(config('cache.default_hours')),
+            function () {
+		        return Post::latest()->get();
+		    }
+		);
+
 		$reportSelectOptions = $reportService->getLabelBind();
 
 		return view(

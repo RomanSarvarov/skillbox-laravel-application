@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Models\FlushCacheOnModelChange;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -27,5 +28,10 @@ use Illuminate\Support\Carbon;
  */
 class Feedback extends AbstractModel
 {
+    use FlushCacheOnModelChange;
+
+    /**
+     * @var string
+     */
     protected $table = 'feedbacks';
 }
